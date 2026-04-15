@@ -270,7 +270,8 @@ class TutorialLLM(nn.Module):
             # Flatten the labels to a list of token ids
             labels = labels.view(B * T)
             # Compute the cross-entropy loss between the logits and the labels
-            loss = F.cross_entropy(logits, labels, reduce=reduce_loss)
+            reduction = 'mean' if reduce_loss else 'none'
+            loss = F.cross_entropy(logits, labels, reduction=reduction)
 
         return logits, loss
 

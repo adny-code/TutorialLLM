@@ -98,7 +98,8 @@ class TutorialLLM(nn.Module):
             B, T, vocabulary_size = logits.shape
             logits = logits.view(B * T, vocabulary_size)
             labels = labels.view(B * T)
-            loss = F.cross_entropy(logits, labels, reduce=reduce_loss)
+            reduction = 'mean' if reduce_loss else 'none'
+            loss = F.cross_entropy(logits, labels, reduction=reduction)
 
         return logits, loss
 ```
